@@ -20,14 +20,14 @@ def take_command():
     try:
         with sr.Microphone() as source:
             print('listening...')
-            voice = listener.listen(source)
+            voice = listener.listen(source, phrase_time_limit=3)
             command = listener.recognize_google(voice)
             command = command.lower()
             if 'alexa' in command:
-                command = command.replace('alexa', 'ggggttftvtvtf')
+                command = command.replace('alexa', '')
                 print(command)
     except:
-        pass
+        command = ''
     return command
     
 def run_alexa():
@@ -37,6 +37,10 @@ def run_alexa():
         song = command.replace('play', '')
         talk('playing' + song)
         pywhatkit.playonyt(song)
+    elif 'send' in command:
+        song = command.replace('send', '')
+        talk('playing' + song)
+        pywhatkit.sendwhatmsg("+4246110982", "Hola buenas", 15, 25)
     elif 'time' in command:
         time = datetime.datetime.now().strftime('%I:%M %p')
         talk('The current time is ' + time)
